@@ -6,6 +6,9 @@ public class AddressBook {
 	   	 System.out.println("-----------------------------------");
 	   	 Contact contact1=new Contact("Anjali","Rawke","Bhagwant Nagar","Nanded","Maharashtra",431601,705816,"anjalirawke21gmail.com");
 	   	 contact1.Display();
+	   	 System.out.println("-----------------------------------------");
+	   	 System.out.println("Add Contact: ");
+	   	contact1.addContact();
 	    }
 	}
 
