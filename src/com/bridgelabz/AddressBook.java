@@ -3,8 +3,8 @@ package com.bridgelabz;
 public class AddressBook {
 	public void createContact() {
 
-		ContactPerson person = new ContactPerson("shubham", "shinde", "LaxmiRoad", "Pune", "Maharashtra",
-				"dinesh123@gmail.com", 411025, "9404291279");
+		ContactPerson person = new ContactPerson("Anjali", "Rawke", "Bhagwant nagar", "Nanded", "Maharashtra",
+				"anjalirawke21@gmail.com", 431605, "7058162286");
 		System.out.println("First Name: " + person.getFirstName());
 		System.out.println("Last Name: " + person.getLastName());
 		System.out.println("Address: " + person.getAddress());
