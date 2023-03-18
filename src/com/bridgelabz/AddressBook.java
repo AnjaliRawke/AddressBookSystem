@@ -96,6 +96,5 @@ public class AddressBook {
 		for (ContactPerson person : addressBook1) {
 			System.out.println(person);
 		}
-
 	}
 }
