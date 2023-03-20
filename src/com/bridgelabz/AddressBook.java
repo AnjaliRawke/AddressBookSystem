@@ -1,11 +1,35 @@
 package com.bridgelabz;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
+	String name;
 	Scanner sc = new Scanner(System.in);
-	ArrayList<ContactPerson> addressBook1 = new ArrayList<>();
+	ArrayList<ContactPerson> contacts = new ArrayList<>();
+
+	public AddressBook(String name) {
+		this.name = name;
+		contacts = new ArrayList<>();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ArrayList<ContactPerson> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(ArrayList<ContactPerson> contacts) {
+		this.contacts = contacts;
+	}
 
 	public ContactPerson createContact() {
 		ContactPerson person = new ContactPerson();
@@ -31,7 +55,7 @@ public class AddressBook {
 
 	public void addContact() {
 		ContactPerson contactPerson = createContact();
-		addressBook1.add(contactPerson);
+		contacts.add(contactPerson);
 		System.out.println(contactPerson);
 		System.out.println("Contact added successfully");
 	}
@@ -40,7 +64,7 @@ public class AddressBook {
 		boolean isContactFound = false;
 		System.out.println("Enter Name to edit Contact");
 		String name = sc.next();
-		for (ContactPerson contactPerson : addressBook1) {
+		for (ContactPerson contactPerson : contacts) {
 			if (name.equalsIgnoreCase(contactPerson.getFirstName())) {
 				isContactFound = true;
 				System.out.print("Enter First Name :");
@@ -74,14 +98,14 @@ public class AddressBook {
 		boolean isContactFound = false;
 		System.out.println("enter name to delete contact");
 		String name = sc.next();
-		for (ContactPerson contactPerson : addressBook1) {
+		for (ContactPerson contactPerson : contacts) {
 			if (contactPerson.getFirstName().equalsIgnoreCase(name)) {
 				System.out.println("contact found:");
 				isContactFound = true;
 				System.out.println(contactPerson);
 				System.out.println("confirm to delete (y/n)");
 				if (sc.next().equalsIgnoreCase("y")) {
-					addressBook1.remove(contactPerson);
+					contacts.remove(contactPerson);
 					System.out.println("contact deleted");
 				}
 				break;
@@ -93,8 +117,17 @@ public class AddressBook {
 	}
 
 	void display() {
-		for (ContactPerson person : addressBook1) {
+		for (ContactPerson person : contacts) {
 			System.out.println(person);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "AddressBook{" +
+				"name='" + name + '\'' +
+				", sc=" + sc +
+				", contacts=" + contacts +
+				'}';
 	}
 }

@@ -6,7 +6,6 @@ public class ContactPerson {
 	private long phoneNumber;
 
 	public ContactPerson() {
-
 	}
 
 	public String getFirstName() {
