@@ -7,6 +7,15 @@ import java.util.Scanner;
 public class AddressBook {
 	ArrayList<ContactPerson> contacts = new ArrayList<>();
 
+	public ArrayList<ContactPerson> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(ArrayList<ContactPerson> contacts) {
+		this.contacts = contacts;
+	}
+
+
 	private String addressBookName;
 	public String getAddressBookName() {
 		return addressBookName;
