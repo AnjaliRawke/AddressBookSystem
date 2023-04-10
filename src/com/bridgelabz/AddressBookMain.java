@@ -120,7 +120,6 @@ public class AddressBookMain {
 				break;
 		}
 	}
-
 	public static void displayAddressBook(){
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter the name of the address book you want to Display:");
