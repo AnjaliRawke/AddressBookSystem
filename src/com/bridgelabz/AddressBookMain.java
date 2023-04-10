@@ -133,18 +133,43 @@ public class AddressBookMain {
 			System.out.println("Given Address Book not Found\n");
 	}
 
-	public static void displaySortedAddressBook() {
+	public static void displaySortedAddressBook(){
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter name of address book you want to Display:");
 		String name = in.next();
-		if (addressBookMap.containsKey(name)) {
+		if(addressBookMap.containsKey(name)) {
 			AddressBook Temp = addressBookMap.get(name);
-			List<ContactPerson> sortedList = Temp.getContacts().stream().sorted(Comparator.comparing(ContactPerson::getFirstName)).collect(Collectors.toList());
+			System.out.println("Choose option to sort contacts in Address Book:");
+			System.out.println("1.First Name");
+			System.out.println("2. City");
+			System.out.println("3. State");
+			System.out.println("4. Zip Code");
+			int choice = in.nextInt();
+
+			List<ContactPerson> sortedList = new ArrayList<>();
+			switch (choice){
+				case 1:
+					sortedList = Temp.getContacts().stream().sorted(Comparator.comparing(ContactPerson::getFirstName)).collect(Collectors.toList());
+					break;
+				case 2:
+					sortedList = Temp.getContacts().stream().sorted(Comparator.comparing(ContactPerson::getCity)).collect(Collectors.toList());
+					break;
+				case 3:
+					sortedList = Temp.getContacts().stream().sorted(Comparator.comparing(ContactPerson::getState)).collect(Collectors.toList());
+					break;
+				case 4:
+					sortedList = Temp.getContacts().stream().sorted(Comparator.comparing(ContactPerson::getZip)).collect(Collectors.toList());
+					break;
+				default:
+					System.out.println("Choose Valid Option");
+					break;
+			}
 			System.out.println("The Sorted Contacts: ");
 			System.out.println(sortedList);
 			System.out.println();
-		} else
-			System.out.println("Given Address Book not Found");
+		}
+		else
+			System.out.println("Address Book not Found");
 	}
 
 	public static void main(String[] args) {
@@ -158,10 +183,10 @@ public class AddressBookMain {
 			System.out.println("2. Add Contact");
 			System.out.println("3. Edit Contact");
 			System.out.println("4. Delete Contact");
-			System.out.println("5. Search Contacts from a specific City or specific State");
+			System.out.println("5. Search Contacts from  City or State");
 			System.out.println("6. Display Dictionary of Address Books");
 			System.out.println("7. Display Address Books Contacts");
-			System.out.println("8. Display Contacts in Sorted Order based on person's name");
+			System.out.println("8. Display Contacts in Sorted Order based on particular details");
 			System.out.println("9. exit");
 			int choice = in.nextInt();
 
