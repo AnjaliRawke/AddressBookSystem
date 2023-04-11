@@ -1,10 +1,14 @@
 package com.bridgelabz;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBookMain {
-	public static Map<String,AddressBook> addressBookMap= new HashMap<>();
+	public static HashMap<String, AddressBook> addressBookMap = new HashMap<String, AddressBook>();
 
 
 	public static void addAddressBook() {
@@ -19,16 +23,16 @@ public class AddressBookMain {
 			return;
 		}
 
-		addressBookMap.put(addressBook.getAddressBookName(),addressBook);
+		addressBookMap.put(addressBook.getAddressBookName(), addressBook);
 		System.out.println("Address Book Added");
 		System.out.println();
 
-		boolean status= true;
-		while(status){
+		boolean status = true;
+		while (status) {
 			System.out.println("1. Add a Contact to this Address Book");
 			System.out.println("2. Close this Address Book");
 			int choice = in.nextInt();
-			switch (choice){
+			switch (choice) {
 				case 1:
 					addressBook.addContact();
 					System.out.println(addressBook);
@@ -36,7 +40,7 @@ public class AddressBookMain {
 					System.out.println();
 					break;
 				case 2:
-					status=false;
+					status = false;
 					break;
 				default:
 					System.out.println("Enter a valid choice");
@@ -49,89 +53,83 @@ public class AddressBookMain {
 		System.out.println("Enter the name of the address book you want to add contact:");
 		String name = in.next();
 
-		if(addressBookMap.containsKey(name)) {
-			AddressBook Temp= addressBookMap.get(name);
+		if (addressBookMap.containsKey(name)) {
+			AddressBook Temp = addressBookMap.get(name);
 			Temp.addContact();
 			System.out.println(Temp);
 			System.out.println("Contact Added");
 			System.out.println();
-		}
-		else
+		} else
 			System.out.println("Given Address Book not Found\n");
 	}
 
-	public static void editContact(){
+	public static void editContact() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter the name of the address book, the contact you want to edit:");
-		String name= in.next();
+		String name = in.next();
 
-		if(addressBookMap.containsKey(name)) {
-			AddressBook Temp= addressBookMap.get(name);
+		if (addressBookMap.containsKey(name)) {
+			AddressBook Temp = addressBookMap.get(name);
 			Temp.editDetails();
-		}
-		else
+		} else
 			System.out.println("Given Address Book not Found\n");
 	}
 
-	public static void deleteContact(){
+	public static void deleteContact() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter the name of the address book, the contact you want to Delete :");
-		String name= in.next();
+		String name = in.next();
 
-		if(addressBookMap.containsKey(name)) {
-			AddressBook Temp= addressBookMap.get(name);
+		if (addressBookMap.containsKey(name)) {
+			AddressBook Temp = addressBookMap.get(name);
 			Temp.deleteDetails();
-		}
-		else
+		} else
 			System.out.println("Given Address Book not Found\n");
 	}
 
-	public static void searchContact(){
-		Scanner in = new Scanner(System.in);
-		System.out.println("1. search all Contacts from a specific City");
-		System.out.println("2. search all Contacts from a specific State");
-		int choice = in.nextInt();
+	public static void searchByCity() {
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("Enter the name of the City where the Person resides : ");
+		String cityName = userInput.next();
+		System.out.println("Enter the name of the Person : ");
+		String personName = userInput.next();
 
-		switch (choice){
-			case 1:
-				System.out.print("Enter name of the City: ");
-				String cityName = in.next();
-				List<ContactPerson> cityList = new ArrayList<>();
-				addressBookMap.values().stream().forEach(addressBook -> cityList.addAll(addressBook.getContacts().stream().filter(
-						contact -> contact.getCity().equalsIgnoreCase(cityName)).toList()));
-				int countByCity = cityList.size();
-				System.out.println(countByCity + "Contact Found in " + cityName +" city");
-				System.out.println(cityList);
-				System.out.println();
-				break;
-			case 2:
-				System.out.print("Enter name of the State: ");
-				String stateName = in.next();
-				List<ContactPerson> stateList = new ArrayList<>();
-				addressBookMap.values().stream().forEach(addressBook -> stateList.addAll(addressBook.getContacts().stream().filter(
-						contact -> contact.getState().equalsIgnoreCase(stateName)).toList()));
-				int countByState = stateList.size();
-				System.out.println(countByState + "Contacts Found in " + stateName +" State");
-				System.out.println(stateList);
-				System.out.println();
-				break;
-			default:
-				System.out.println("Please Choose valid option");
-				searchContact();
-				break;
+		for (AddressBook addressBook : addressBookMap.values()) {
+			ArrayList<ContactPerson> contactList = addressBook.getContacts();
+			contactList.stream()
+					.filter(person -> person.getFirstName().equals(personName) && person.getCity().equals(cityName))
+					.forEach(person -> System.out.println(person));
+
 		}
 	}
-	public static void displayAddressBook(){
+
+	public static void searchByState() {
+		Scanner userInput = new Scanner(System.in);
+		System.out.println("Enter the name of the State where the Person resides : ");
+		String stateName = userInput.next();
+		System.out.println("Enter the name of the Person : ");
+		String personName = userInput.next();
+
+		for (AddressBook addressBook : addressBookMap.values()) {
+			ArrayList<ContactPerson> contactList = ((AddressBook) addressBook).getContacts();
+			contactList.stream()
+					.filter(person -> person.getFirstName().equals(personName) && person.getState().equals(stateName))
+					.forEach(person -> System.out.println(person));
+
+		}
+	}
+
+	public static void displayAddressBook() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter the name of the address book you want to Display:");
 		String name = in.next();
-		if(addressBookMap.containsKey(name)) {
+		if (addressBookMap.containsKey(name)) {
 			AddressBook Temp = addressBookMap.get(name);
 			System.out.println(Temp);
-		}
-		else
+		} else
 			System.out.println("Given Address Book not Found\n");
 	}
+
 
 	public static void displaySortedAddressBook(){
 		Scanner in = new Scanner(System.in);
@@ -172,6 +170,33 @@ public class AddressBookMain {
 			System.out.println("Address Book not Found");
 	}
 
+	public static void writeToFile() {
+		String path = "C:\\Users\\pramo\\JavaApp\\AddresssBookSystem\\src\\com\\bridgelabz\\AddressBook.txt";
+		StringBuffer addressBookBuffer = new StringBuffer();
+		addressBookMap.values().stream().forEach(contact -> {
+			String personDataString = contact.toString().concat("\n");
+			addressBookBuffer.append(personDataString);
+		});
+
+		try {
+			Files.write(Paths.get(path), addressBookBuffer.toString().getBytes());
+		}
+		catch (IOException e) {
+			System.out.println("Catch block");
+		}
+	}
+
+	public static void readFromFile() {
+		String path = "C:\\Users\\pramo\\JavaApp\\AddresssBookSystem\\src\\com\\bridgelabz\\AddressBook.txt";
+		System.out.println("Reading from : " + path + "\n");
+		try {
+			Files.lines(new File(path).toPath()).forEach(employeeDetails -> System.out.println(employeeDetails));
+		}
+		catch(IOException e){
+			System.out.println("Catch block");
+		}
+	}
+
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book Program");
 
@@ -183,11 +208,13 @@ public class AddressBookMain {
 			System.out.println("2. Add Contact");
 			System.out.println("3. Edit Contact");
 			System.out.println("4. Delete Contact");
-			System.out.println("5. Search Contacts from  City or State");
+			System.out.println("5. Search Person by Region");
 			System.out.println("6. Display Dictionary of Address Books");
 			System.out.println("7. Display Address Books Contacts");
 			System.out.println("8. Display Contacts in Sorted Order based on particular details");
-			System.out.println("9. exit");
+			System.out.println("9. Write From File");
+			System.out.println("10. Read From file");
+			System.out.println("11. exit");
 			int choice = in.nextInt();
 
 			switch (choice) {
@@ -205,7 +232,13 @@ public class AddressBookMain {
 					deleteContact();
 					break;
 				case 5:
-					searchContact();
+					Scanner userInput = new Scanner(System.in);
+					System.out.println("Enter \n1.Search By City\n2.Search By State");
+					int searChoice = userInput.nextInt();
+					if(searChoice==1)
+						searchByCity();
+					else
+						searchByState();
 					break;
 				case 6:
 					System.out.println(addressBookMap);
@@ -215,6 +248,12 @@ public class AddressBookMain {
 					break;
 				case 8:
 					displaySortedAddressBook();
+					break;
+				case 9:
+					writeToFile();
+					break;
+				case 10:
+					readFromFile();
 					break;
 				default:
 					status=false;
